@@ -1,12 +1,11 @@
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-
+import { useState } from "react";
 
 function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleOpenNav = () => setMenuOpen(true);
+  const handleCloseNav = () => setMenuOpen(false);
+
   return (
     <div className="flex justify-center items-center flex-row bg-gray-200">
       <nav className="bg-gray-100 w-full border-b border-gray-200">
@@ -142,6 +141,6 @@ function NavBar() {
       </nav>
     </div>
   );
-};
+}
 
 export default NavBar;
