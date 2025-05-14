@@ -1,3 +1,5 @@
+import { useState } from "react";
+import pandaImg from "../media/panda.jpeg";
 
 
 function NavBar() {
