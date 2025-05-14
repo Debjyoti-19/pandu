@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import { useAuthStore } from './store/useAuthStore'
 import Signup from './components/signup'
 import Page1 from './components/page1'
-import { useEffect } from 'react'
+
 
 function App() {
   const { authUser, isCheckingAuth } = useAuthStore()

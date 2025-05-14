@@ -1,21 +1,24 @@
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-
+import React, { useState } from "react";
+import pandaImg from "../media/panda.jpeg";
 
 function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleOpenNav = () => setMenuOpen(true);
+  const handleCloseNav = () => setMenuOpen(false);
+
   return (
-    <div className="flex justify-center items-center flex-row bg-gray-200">
-      <nav className="bg-gray-100 w-full border-b border-gray-200">
+    <div className="flex justify-center items-center flex-row bg-white pt-4 px-4 rounded-lg">
+      <nav className="bg-gray-100 w-full border-b border-gray-200 rounded-lg shadow-md h-25">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Brand */}
-            <a href="#" className="text-xl font-bold text-gray-700">
-              Navbar Scroll
-            </a>
+          <div className="flex items-center h-16">
+            {/* Left section: image at left edge, centered horizontally within its space */}
+            <div className=" pt-13 w-1/3 flex justify-start items-center">
+              <img
+                src={pandaImg}
+                className="h-30 w-30 object-contain rounded-full"
+              />
+            </div>
 
             {/* Mobile Menu Toggle */}
             <div className="lg:hidden">
@@ -48,34 +51,6 @@ function NavBar() {
               <a href="#action2" className="text-gray-700 hover:text-blue-600">
                 Link
               </a>
-
-              {/* Dropdown */}
-              <div className="relative group">
-                <button className="text-gray-700 hover:text-blue-600">
-                  Link ▾
-                </button>
-                <div className="absolute hidden group-hover:block bg-white border shadow-md mt-1 py-2 w-48">
-                  <a
-                    href="#action3"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#action4"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Another action
-                  </a>
-                  <hr className="my-1 border-gray-200" />
-                  <a
-                    href="#action5"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Something else here
-                  </a>
-                </div>
-              </div>
 
               <a href="#" className="text-gray-400 cursor-not-allowed">
                 Disabled
@@ -142,6 +117,6 @@ function NavBar() {
       </nav>
     </div>
   );
-};
+}
 
 export default NavBar;
