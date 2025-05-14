@@ -1,9 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { connectDB } from './lib/db.js'
-import userRoute from './routes/user.route.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import userRoute from './routes/user.route.js'
+import productRoute from './routes/product.route.js'
 
 dotenv.config()
 const app = express()
@@ -16,6 +17,7 @@ app.use(cors({
 }))
 
 app.use('/user', userRoute)
+app.use('/product', productRoute)
 
 app.listen(port, () => {
     console.log(`Server started at port ${port}`)

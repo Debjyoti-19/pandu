@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import pandaImg from "../media/panda.jpeg";
+
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
