@@ -1,16 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Page1() {
-  return (
-    <div class= "flex justify-center items-center flex-col ">
-      <button
-        class="bg-blue-500 hover:bg-blue-900 w-[20px] h-[20px] flex justify-center items-center rounded-full text-white font-bold 
-      px-50 py-10"
-      >
-        click
-      </button>
+  const navigation = useNavigate();
 
-      <h1>hello</h1>
+  return (
+    <div class="main">
+      <form action="/login" method="get">
+        <div class="wrapper1 wrapper">
+          <button type="submit" onClick={navigation("/login")}>
+            <span>Login</span>
+          </button>
+        </div>
+      </form>
+      <form action="/signup" method="get">
+        <div class="wrapper2 wrapper">
+          <button type="submit" onClick={navigation("/signup")}>
+            <span>New Account</span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
