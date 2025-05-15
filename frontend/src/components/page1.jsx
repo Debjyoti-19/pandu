@@ -5,21 +5,23 @@ function Page1() {
   const navigation = useNavigate();
 
   return (
-    <div class="main">
-      <form action="/login" method="get">
-        <div class="wrapper1 wrapper">
-          <button type="submit" onClick={navigation("/login")}>
-            <span>Login</span>
-          </button>
-        </div>
-      </form>
-      <form action="/signup" method="get">
-        <div class="wrapper2 wrapper">
-          <button type="submit" onClick={navigation("/signup")}>
-            <span>New Account</span>
-          </button>
-        </div>
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 space-y-6">
+      <div className="w-64">
+        <button
+          onClick={() => navigation("/login")}
+          className="w-full bg-black text-white py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition duration-200"
+        >
+          Login
+        </button>
+      </div>
+      <div className="w-64">
+        <button
+          onClick={() => navigation("/signup")}
+          className="w-full bg-black text-white py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition duration-200"
+        >
+          New Account
+        </button>
+      </div>
     </div>
   );
 }

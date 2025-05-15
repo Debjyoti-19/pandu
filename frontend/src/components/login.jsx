@@ -2,27 +2,48 @@ import React from "react";
 
 function Login() {
   return (
-    <div class="login-box">
-      <h2>Login</h2>
-      <form action="/login" method="POST">
-        <div class="wrapper">
-          <div class="container">
-            <div class="email">
-              <span class="email"> Email: </span>
-              <input type="email" name="email" placeholder="Enter Email" />
-            </div>
-            <div class="password">
-              <span class="password"> Password: </span>
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter Password"
-              />
-            </div>
-            <div class="btn-wrapper">
-              <button type="submit">Submit</button>
-            </div>
-          </div>
+    <div className="max-w-md mx-auto mt-20 p-8 bg-gray-100 shadow-lg rounded-2xl">
+      <h2 className="text-3xl font-bold text-black mb-6 text-center">Login</h2>
+      <form action="/login" method="POST" className="space-y-5">
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-black font-semibold mb-1"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-black font-semibold mb-1"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            className="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-200"
+          >
+            Submit
+          </button>
         </div>
       </form>
     </div>
