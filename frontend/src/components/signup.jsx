@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const Signup = ({ error }) => {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState(null)
+  const navigate = useNavigate;
 
-  const { isSigningup, signup } = useAuthStore()
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(null);
+
+  const { isSigningup, signup } = useAuthStore();
 
   const handleRegisterButton = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,11 +29,12 @@ const Signup = ({ error }) => {
       firstName,
       lastName,
       email,
-      phone
-    }
-    signup(userdata)
-  }
- 
+      phone,
+    };
+    signup(userdata);
+    navigate("/login");
+  };
+
   return (
     <div className="max-w-md mx-auto mt-10 p-8 bg-gray-100 shadow-lg rounded-2xl">
       <h1 className="text-3xl font-bold text-black mb-6 text-center">Signup</h1>
