@@ -6,7 +6,6 @@ export const handleSignup = async (req, res) => {
     if (!firstName || !lastName || !email || !phone) return res.status(400).json({ message: "All fields are required." })
     try {
         const user = await User.findOne({ email }) || await User.findOne({ phone })
-        if (user) console.log(user)
         if (user) return res.status(400).json({ message: "user already exists" })
         const newUser = new User({
             firstName,
