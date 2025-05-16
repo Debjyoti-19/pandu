@@ -1,6 +1,31 @@
 import React from "react";
 
 function Login() {
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+
+  const { isLogining, login } = useAuthStore()
+
+  const navigate = useNavigate()
+
+  const handleLogin = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    const userdata = {
+      firstName,
+      lastName,
+      email,
+      phone
+    }
+    login(userdata)
+    navigate('/login')
+  }
+
   return (
     <div className="max-w-md mx-auto mt-20 p-8 bg-gray-100 shadow-lg rounded-2xl">
       <h2 className="text-3xl font-bold text-black mb-6 text-center">Login</h2>
