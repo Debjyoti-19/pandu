@@ -20,10 +20,7 @@ function Login() {
     }
 
     const userdata = {
-      firstName,
-      lastName,
-      email,
-      phone
+      
     }
     login(userdata)
     navigate('/login')
