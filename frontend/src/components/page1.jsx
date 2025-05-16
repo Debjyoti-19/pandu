@@ -1,16 +1,27 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Page1() {
-  return (
-    <div class= "flex justify-center items-center flex-col ">
-      <button
-        class="bg-blue-500 hover:bg-blue-900 w-[20px] h-[20px] flex justify-center items-center rounded-full text-white font-bold 
-      px-50 py-10"
-      >
-        click
-      </button>
+  const navigation = useNavigate();
 
-      <h1>hello</h1>
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 space-y-6">
+      <div className="w-64">
+        <button
+          onClick={() => navigation("/login")}
+          className="w-full bg-black text-white py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition duration-200"
+        >
+          Login
+        </button>
+      </div>
+      <div className="w-64">
+        <button
+          onClick={() => navigation("/signup")}
+          className="w-full bg-black text-white py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition duration-200"
+        >
+          New Account
+        </button>
+      </div>
     </div>
   );
 }
