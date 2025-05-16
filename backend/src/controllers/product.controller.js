@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import Product from '../models/product.model.js'
-
-export const handleAddItem = async (req, res) => {
-    const { _id, productName, description, catagory, image } = req.body
-=======
 import Product from "../models/product.model.js"
 
 export const handleAddItem = async (req, res) => {
@@ -27,5 +21,4 @@ export const handleAddItem = async (req, res) => {
         console.log("Error in handleAddItem : ", error.message)
         res.status(500).json({ message: "Internal server error" })
     }
->>>>>>> d17c47592df4f517830b0c5da974286816165be4
 }
