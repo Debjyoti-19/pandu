@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 import { useState } from "react";
 import pandaImg from "../media/panda.jpeg";
 import { CircleUser } from "lucide-react";
 
->>>>>>> d17c47592df4f517830b0c5da974286816165be4
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
