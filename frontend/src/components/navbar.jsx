@@ -1,12 +1,17 @@
 import { useState } from "react";
 import pandaImg from "../media/panda.jpeg";
 import { CircleUser } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleOpenNav = () => setMenuOpen(true);
   const handleCloseNav = () => setMenuOpen(false);
+  const navigate = useNavigate();
+  const handleStore = () => {
+    navigate("/store");
+  };
 
   return (
     <>
@@ -41,6 +46,14 @@ function NavBar() {
                 <a href="#" className="text-gray-400 cursor-not-allowed">
                   Disabled
                 </a>
+                {/* Add Store button here */}
+                <button
+                  onClick={handleStore}
+                  className="text-gray-700 hover:text-green-600 px-3 py-1 rounded-md border border-green-600 ml-4"
+                  type="button"
+                >
+                  Store
+                </button>
               </div>
 
               {/* Toggle and CircleUser on extreme right */}
@@ -103,7 +116,7 @@ function NavBar() {
               <a href="#about" onClick={handleCloseNav}>
                 About
               </a>
-              <a href="#about" onClick={handleCloseNav}>
+              <a href="#about" onClick={handleCloseNav} navigate={"/store"}>
                 My Store
               </a>
               <a href="#services" onClick={handleCloseNav}>
