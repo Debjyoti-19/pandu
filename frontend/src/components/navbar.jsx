@@ -103,6 +103,9 @@ function NavBar() {
               <a href="#about" onClick={handleCloseNav}>
                 About
               </a>
+              <a href="#about" onClick={handleCloseNav}>
+                My Store
+              </a>
               <a href="#services" onClick={handleCloseNav}>
                 Services
               </a>
