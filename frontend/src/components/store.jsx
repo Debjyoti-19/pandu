@@ -1,48 +1,72 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Store() {
   const navigate = useNavigate();
-  const [showProduct, setShowProduct] = useState(false);
-
-  // Example product data
-  const product = {
-    name: "Sample Product",
-    description: "This is a sample product description.",
-    category: "Electronics",
-    image: "https://via.placeholder.com/150",
-  };
-
-  const handleShowProduct = () => {
-    setShowProduct(true);
-  };
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [image, setImage] = useState("");
 
   return (
     <>
-      <h1>My store</h1>
       <div>
-        <button
-          onClick={() => navigate("/Home")}
-          className="w-full bg-black text-white py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition duration-200"
-        >
-          Go to Home
-        </button>
-      </div>
-      <div>
-        <button onClick={handleShowProduct}>Show Products</button>
-      </div>
-      {showProduct && (
-        <div className="mt-6 p-4 border rounded-lg shadow">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="mb-2 w-32 h-32 object-cover"
+        <h1>Store</h1>
+
+        <div>
+          Product Name
+          <input
+            type="text"
+            placeholder="Enter Product Name"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
           />
-          <h2 className="text-xl font-bold">{product.name}</h2>
-          <p className="text-gray-700">{product.description}</p>
-          <p className="text-gray-500">Category: {product.category}</p>
         </div>
-      )}
+
+        <div>
+          Description
+          <input
+            type="text"
+            placeholder="Enter Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
+
+        <div>
+          Image
+          <input
+            type="file"
+            placeholder="Choose Image"
+            accept="image/*"
+            value={description}
+            onChange={(e) => setImage(e.target.value)}
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
+
+        <div>
+          category
+          <input
+            type="text"
+            placeholder="Enter Product Name"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
+
+        <button
+          type="button"
+          className="w-full bg-blue-300 text-white py-2 px-5 rounded-lg font-semibold hover:bg-gray-500 transition duration-200"
+        ></button>
+      </div>
     </>
   );
 }
