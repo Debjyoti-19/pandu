@@ -1,12 +1,44 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAdminStore } from "../store/useAdminStore.js";
 
 function Store() {
   const navigate = useNavigate();
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [catagory, setCategory] = useState("");
   const [image, setImage] = useState("");
+  const [products, setProducts] = useState([]);
+  const { addProduct } = useAdminStore();
+
+  const handleAddProduct = () => {
+    if (!productName || !description || !catagory || !image) {
+      return alert("Please fill all the fields");
+    }
+
+    const data = new FormData();
+    {
+      data.append("productName", productName);
+      data.append("description", description);
+      data.append("catagory", catagory);
+      data.append("image", image);
+    }
+
+    setProducts([...products, { productName, description, catagory, image }]);
+    setProductName("");
+    setDescription("");
+    setCategory("");
+    setImage(null);
+    document.getElementById("image-input").value = "";
+    console.log("product added: ", {
+      productName,
+      description,
+      catagory,
+      image,
+    });
+    addProduct(data);
+    return alert("Product added successfully", navigate("/home"));
+  };
 
   return (
     <>
@@ -41,10 +73,10 @@ function Store() {
           Image
           <input
             type="file"
+            id="image-input"
             placeholder="Choose Image"
             accept="image/*"
-            value={description}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
             className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
             required
           />
@@ -55,7 +87,7 @@ function Store() {
           <input
             type="text"
             placeholder="Enter Product Name"
-            value={category}
+            value={catagory}
             onChange={(e) => setCategory(e.target.value)}
             className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
             required
@@ -64,8 +96,11 @@ function Store() {
 
         <button
           type="button"
+          onClick={handleAddProduct}
           className="w-full bg-blue-300 text-white py-2 px-5 rounded-lg font-semibold hover:bg-gray-500 transition duration-200"
-        ></button>
+        >
+          Add product
+        </button>
       </div>
     </>
   );
