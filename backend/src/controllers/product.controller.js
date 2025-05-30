@@ -48,7 +48,9 @@ export const handleGetItem = async (req, res) => {
     const { adminId } = req.body
     try {
         if(!adminId) return res.status(400).json({ message: "Admin id is required" })
-        
+        const products = await Product.find({ adminId }).select("-adminId")
+        console.log(products)
+        return res.status(200).json(products)
     } catch (error) {
         console.log("Error in handleGetItem : ", error.message)
         res.status(500).json({ message: "Internal server error" })
