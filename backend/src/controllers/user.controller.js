@@ -43,7 +43,9 @@ export const handleLogin = async (req, res) => {
     const { email, phone } = req.body
     try {
         if (!email && !phone) return res.status(400).json({ message: "Enter valid data" })
-        const user = await User.findOne({ email }) || await User.findOne({ phone })
+        let user = null
+        if (email) user = await User.findOne({ email })
+        else if (phone) user = await User.findOne({ phone })
         if (!user) return res.status(400).json({ message: "User doesn't exist" });
         generateToken(user._id, res)
         return res.status(200).json({

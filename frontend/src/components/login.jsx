@@ -27,7 +27,7 @@ function Login() {
       email,
     };
     login(userdata);
-    navigate("/home");
+    navigate("/");
   };
 
   return (
