@@ -27,7 +27,9 @@ export const useAdminStore = create((set) => ({
             })
             console.log(res)
         } catch (error) {
-            
+            console.log("Error in getting product data : ", error)
+        } finally {
+            set({ isGettingData: false })
         }
     }
 }))
