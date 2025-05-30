@@ -3,21 +3,27 @@ import { generateToken } from '../lib/utils.js'
 
 export const handleSignup = async (req, res) => {
     const { firstName, lastName, email, phone } = req.body
-    if (!firstName || !lastName || !email || !phone) return res.status(400).json({ message: "All fields are required." })
+    if (!firstName || !lastName) return res.status(400).json({ message: "All fields are required." })
+    if (!phone && !email) return res.status(400).json({ message: "All fields are required." })
     try {
-        const user = await User.findOne({ email }) || await User.findOne({ phone })
-        if (user) return res.status(400).json({ message: "user already exists" })
-        const newUser = new User({
+        let user = null;
+        if (email && phone) user = await User.findOne({ $or: [{ email }, { phone }] })
+        else if (email) user = await User.findOne({ email })
+        else if (phone) user = await User.findOne({ phone })
+        if (user) return res.status(400).json({ message: "user already exists" });
+        const newUserData = {
             firstName,
             lastName,
-            email,
-            phone
-        })
+        };
+        if (email) newUserData.email = email;
+        if (phone) newUserData.phone = phone;
+
+        const newUser = new User(newUserData);
 
         if (newUser) {
+            await newUser.save();
             generateToken(newUser._id, res)
-            await newUser.save()
-            res.status(201).json({
+            return res.status(201).json({
                 _id: newUser._id,
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
@@ -25,7 +31,7 @@ export const handleSignup = async (req, res) => {
                 phone: newUser.phone,
             })
         } else {
-            res.status(400).json({ message: "Invalid user data" })
+            return res.status(400).json({ message: "Invalid user data" })
         }
     } catch (error) {
         console.log('Error in signup handler : ', error.message)
@@ -55,7 +61,7 @@ export const handleLogin = async (req, res) => {
 
 export const handleLogout = (req, res) => {
     try {
-        res.cookie("jwt", "", {maxAge:0})
+        res.cookie("jwt", "", { maxAge: 0 })
         res.status(200).json({ message: "Logged out successfully" })
     } catch (error) {
         console.log('Error in logout handler : ', error.message)

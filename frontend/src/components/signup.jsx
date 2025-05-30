@@ -10,11 +10,10 @@ const Signup = ({ error }) => {
   const { isSigningup, signup } = useAuthStore();
   const navigate = useNavigate(); 
 
-  const handleRegisterButton = () => {
+  const handleRegisterButton = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
 
-    
     let email = "";
     let phone = "";
 
@@ -33,8 +32,14 @@ const Signup = ({ error }) => {
       email,
       phone,
     };
-    signup(userdata);
-    navigate("/login");
+
+    try {
+      await signup(userdata);
+      navigate("/");
+    } catch (err) {
+      alert("Signup failed. Please try again.");
+      // Optionally set error state here
+    }
   };
 
   return (
