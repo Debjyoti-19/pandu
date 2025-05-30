@@ -1,20 +1,22 @@
-import React from "react";
-import { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore"; 
+import React, { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
-
 function Login() {
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const { isLogining, login } = useAuthStore()
+  const { isLogining, login } = useAuthStore();
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const handleLogin = () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (!firstName.trim()) {
+      alert("Please enter your first name.");
+      return;
+    }
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email address.");
       return;
@@ -22,18 +24,33 @@ function Login() {
 
     const userdata = {
       firstName,
-      lastName,
       email,
-      phone
-    }
-    login(userdata)
-    navigate('/login')
-  }
+    };
+    login(userdata);
+    navigate("/home");
+  };
 
   return (
     <div className="max-w-md mx-auto mt-20 p-8 bg-gray-100 shadow-lg rounded-2xl">
       <h2 className="text-3xl font-bold text-black mb-6 text-center">Login</h2>
-      <form action="/login" method="POST" className="space-y-5">
+      <form onSubmit={handleLogin} className="space-y-5">
+        <div>
+          <label
+            htmlFor="firstName"
+            className="block text-black font-semibold mb-1"
+          >
+            First Name
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Enter First Name"
+            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+        </div>
         <div>
           <label
             htmlFor="email"
@@ -45,31 +62,12 @@ function Login() {
             type="email"
             name="email"
             value={email}
-            onChange={() => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter Email"
             className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
             required
           />
         </div>
-
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-black font-semibold mb-1"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={() => setPassword(e.target.value)}
-            placeholder="Enter Password"
-            className="w-full px-4 py-2 bg-white text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
-            required
-          />
-        </div>
-
         <div>
           <button
             type="submit"
