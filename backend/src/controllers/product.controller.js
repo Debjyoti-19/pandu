@@ -2,10 +2,10 @@ import Product from "../models/product.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const handleAddItem = async (req, res) => {
-  const { adminId, productName, description, category } = req.body;
+  const { adminId, productName, description, category, price } = req.body;
 
   try {
-    if (!adminId || !productName || !description || !category)
+    if (!adminId || !productName || !description || !category || !price)
       return res.status(400).json({ message: "All fields are required" });
 
     const streamUpload = (buffer) => {
@@ -34,6 +34,7 @@ export const handleAddItem = async (req, res) => {
       description,
       category,
       image: imageUrl,
+      price
     });
 
     await newProduct.save();
