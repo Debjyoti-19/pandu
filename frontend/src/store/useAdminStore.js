@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
-import { useAuthStore } from "./useAuthStore.js";
 
 export const useAdminStore = create((set) => ({
   isUploadingData: false,
@@ -18,12 +17,11 @@ export const useAdminStore = create((set) => ({
       set({ isUploadingData: false });
     }
   },
-  getProduct: async () => {
+  getProduct: async (adminId) => {
     set({ isGettingData: true });
-    const { authUser } = useAuthStore();
     try {
       const res = await axiosInstance.post("/product/get-item", {
-        adminId: authUser._id,
+        adminId,
       });
       return res;
     } catch (error) {
