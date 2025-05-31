@@ -1,14 +1,47 @@
+import { useEffect, useState } from "react";
 import NavBar from "./navbar";
+import { useAdminStore } from "../store/useAdminStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 function Home() {
+  const { authUser } = useAuthStore();
+  if (!authUser) {
+    return <div>Please log in to view products.</div>;
+  }
+  const { getProduct } = useAdminStore();
+  if (!authUser) {
+    return <div>Please log in to view products.</div>;
+  }
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await getProduct();
+      console.log(res);
+      if (res && res.data) {
+        setProducts(res.data);
+      }
+    };
+    fetchProducts();
+  }, [getProduct]);
+
   return (
     <>
       <NavBar />
-      <div className="home">
-        <h1>Welcome to the Home Page</h1>
-        <p>This is the home page of your application.</p>
-        <p>You can add more content here as needed.</p>
-      </div>
+      {authUser.firstName}
+      {products.map((product) => (
+        <div key={product._id || product.catagory}>
+          <div>{product.productName}</div>
+          <div>{product.description}</div>
+          <div>{product.catagory}</div>
+          <img
+            src={product.image}
+            alt={product.productName}
+            style={{ width: 100 }}
+          />
+        </div>
+      ))}
     </>
   );
 }
