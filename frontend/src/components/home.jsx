@@ -8,20 +8,19 @@ function Home() {
   if (!authUser) {
     return <div>Please log in to view products.</div>;
   }
-  const { getProduct } = useAdminStore();
+  const { getAllProducts } = useAdminStore();
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await getProduct(authUser._id);
-      console.log(res);
+      const res = await getAllProducts();
       if (res && res.data) {
         setProducts(res.data);
       }
     };
     fetchProducts();
-  }, [getProduct, authUser._id]);
+  }, [getAllProducts]);
 
   return (
     <>
