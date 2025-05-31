@@ -9,23 +9,19 @@ function Home() {
   if (!authUser) {
     return <div>Please log in to view products.</div>;
   }
-  const { getProduct } = useAdminStore();
-  if (!authUser) {
-    return <div>Please log in to view products.</div>;
-  }
+  const { getAllProducts } = useAdminStore();
 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await getProduct();
-      console.log(res);
+      const res = await getAllProducts();
       if (res && res.data) {
         setProducts(res.data);
       }
     };
     fetchProducts();
-  }, [getProduct]);
+  }, [getAllProducts]);
 
   return (
     <>
