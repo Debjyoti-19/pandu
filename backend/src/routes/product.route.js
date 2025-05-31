@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleAddItem, handleGetItem, handleGetItemByAdminId } from "../controllers/product.controller.js";
+import { handleAddItem, handleGetCategory, handleGetItem, handleGetItemByAdminId } from "../controllers/product.controller.js";
 import multer from "multer";
 import { protectRoute } from "../middlewares/auth.middleware.js";
 
@@ -12,5 +12,6 @@ const router = Router();
 router.post("/add-item", protectRoute, upload.single("image"), handleAddItem);
 router.post("/get-admin-product", protectRoute, handleGetItemByAdminId);
 router.get("/get-items", protectRoute, handleGetItem)
+router.get("/get-category", handleGetCategory)
 
 export default router;

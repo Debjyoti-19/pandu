@@ -2,10 +2,10 @@ import Product from "../models/product.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const handleAddItem = async (req, res) => {
-  const { adminId, productName, description, catagory } = req.body;
+  const { adminId, productName, description, category, price } = req.body;
 
   try {
-    if (!adminId || !productName || !description || !catagory)
+    if (!adminId || !productName || !description || !category || !price)
       return res.status(400).json({ message: "All fields are required" });
 
     const streamUpload = (buffer) => {
@@ -32,8 +32,9 @@ export const handleAddItem = async (req, res) => {
       adminId,
       productName,
       description,
-      catagory,
+      category,
       image: imageUrl,
+      price
     });
 
     await newProduct.save();
@@ -60,10 +61,23 @@ export const handleGetItemByAdminId = async (req, res) => {
 export const handleGetItem = async (req, res) => {
   try {
     const products = await Product.find({})
-    if(!products) return res.status(400).json({ message: "No products found" })
+    if (!products) return res.status(400).json({ message: "No products found" })
     return res.status(200).json(products)
   } catch (error) {
     console.log("Error in handleGetItem : ", error.message)
     res.status(500).json({ message: "Internal server error" })
+  }
+}
+
+export const handleGetCategory = async (req, res) => {
+  try {
+    const categories = {
+      cloths: ["tshirts", "jeans"],
+      electronics: ["phone", "laptop"]
+    }
+    return res.status(200).json(categories);
+  } catch (error) {
+    console.log("Error in handleGetCategory : ", error.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 }
