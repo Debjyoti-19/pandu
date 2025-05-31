@@ -1,5 +1,9 @@
 import { useAuthStore } from "../store/useAuthStore";
 
-function Avatar() {
-    
+const user = useAuthStore();
+
+const userAvatar = ({ user }) =>{
+    return <>{user.fristName}</>;
 }
+
+export default userAvatar;

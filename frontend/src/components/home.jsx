@@ -3,6 +3,7 @@ import NavBar from "./navbar";
 import { useAdminStore } from "../store/useAdminStore";
 import { useAuthStore } from "../store/useAuthStore";
 
+
 function Home() {
   const { authUser } = useAuthStore();
   if (!authUser) {
