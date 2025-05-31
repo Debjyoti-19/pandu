@@ -40,5 +40,16 @@ export const useAdminStore = create((set) => ({
         } finally {
             set({ isGettingData: false })
         }
+    },
+    getCatagory: async () => {
+        set({ isGettingData: true })
+        try {
+            const res = await axiosInstance.get("/product/get-category")
+            return res
+        } catch (error) {
+            console.log("Error in getCatagory : ", error)
+        } finally {
+            set({ isGettingData: false })
+        }
     }
 }));
