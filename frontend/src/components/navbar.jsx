@@ -1,5 +1,5 @@
 import { useState } from "react";
-import pandaImg from "../media/panda.jpeg";
+import pandaImg from "../media/panda.png";
 import { CircleUser } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
