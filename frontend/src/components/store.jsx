@@ -50,6 +50,15 @@ function Store() {
     formData.append("price", price);
 
     addProduct(formData);
+  
+
+  setProductName("");
+  setDescription("");
+  setSelectedImage(null);
+  setPrice("");
+  setCategory("");
+  setSubcategory("");
+
   };
 
   return (

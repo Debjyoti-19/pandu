@@ -26,20 +26,21 @@ function Home() {
   return (
     <>
       <NavBar />
-      <div className="flex flex-row space-x-4 overflow-x-auto p-4 bg-gray-100 mt-4">
+      <div className="flex flex-row ">
         {products.map((product) => (
           <div
             key={product._id || product.category}
-            className="flex flex-col items-center"
+            className=""
           >
-            <div className=" bg-white">
+            <div className=" bg-white h-60 w-60 m-2 p-2 rounded-lg shadow-md flex flex-col items-center">
               <img
-                className="object-cover rounded-lg h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 mt-2 mb-2 mx-2"
+                className="h-100 w-100 rounded object-cover mb-2"
                 src={product.image}
                 alt={product.productName}
                 style={{ width: 100, height: 100 }}
               />
               <div>{product.productName}</div>
+              <div>₹{product.price}</div>
             </div>
             {/* <div>{product.description}</div>
             <div>{product.category}</div> */}
