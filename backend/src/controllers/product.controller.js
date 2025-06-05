@@ -2,10 +2,10 @@ import Product from "../models/product.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const handleAddItem = async (req, res) => {
-  const { adminId, productName, description, category, price } = req.body;
+  const { adminId, productName, description, category, subcategory, price } = req.body;
 
   try {
-    if (!adminId || !productName || !description || !category || !price)
+    if (!adminId || !productName || !description || !category || !subcategory || !price)
       return res.status(400).json({ message: "All fields are required" });
 
     const streamUpload = (buffer) => {
@@ -33,6 +33,7 @@ export const handleAddItem = async (req, res) => {
       productName,
       description,
       category,
+      subcategory,
       image: imageUrl,
       price
     });
@@ -72,8 +73,11 @@ export const handleGetItem = async (req, res) => {
 export const handleGetCategory = async (req, res) => {
   try {
     const categories = {
-      cloths: ["tshirts", "jeans"],
-      electronics: ["phone", "laptop"]
+      "Clothing": ["Men's Wear", "Women's Wear", "Kids' Wear", "Footwear", "Accessories"],
+      "Electronics": ["Mobile Phones", "Laptops & Computers", "Televisions", "Home Appliances", "Audio Devices"],
+      "Home and Furniture": ["Living Room Furniture", "Bedroom Furniture", "Kitchen & Dining", "Home Decor", "Lighting"],
+      "Beauty and Personal Care": ["Makeup", "Skincare", "Haircare", "Men's Grooming", "Fragrances"],
+      "Sports and Outdoors": ["Fitness Equipment", "Outdoor Gear", "Activewear", "Sports Gear", "Cycling"]
     }
     return res.status(200).json(categories);
   } catch (error) {
