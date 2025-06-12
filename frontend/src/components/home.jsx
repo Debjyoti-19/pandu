@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { useAdminStore } from "../store/useAdminStore";
 import { useAuthStore } from "../store/useAuthStore";
-
+import { Heart } from "lucide-react";
 
 function Home() {
   const { authUser } = useAuthStore();
@@ -23,33 +23,59 @@ function Home() {
     fetchProducts();
   }, [getAllProducts]);
 
+  // Group products by subcategory
+  const grouped = products.reduce((acc, product) => {
+    const key = product.subcategory || "Other";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(product);
+    return acc;
+  }, {});
+
   return (
     <>
       <NavBar />
-      <h1 className="text-2xl font-bold mx-10 mt-5 text-gray-800">Men's wear</h1>
-      <div className="flex flex-row w-full justify-center items-center flex-auto">
-        <div
-          className="flex flex-row overflow-x-auto w-full px-4 py-8 space-x-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {products.map((product) => (
+      <div className="mx-10 mt-5 h-[calc(100vh-80px)] overflow-y-auto">
+        {Object.entries(grouped).map(([subcategory, items]) => (
+          <div key={subcategory} className="mb-10">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
+              {subcategory}
+            </h1>
             <div
-              key={product._id || product.category}
-              className=""
+              className="flex flex-row overflow-x-auto w-full px-4 py-4 space-x-4"
+              style={{
+                scrollBehavior: "smooth",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
             >
-              <div className="bg-white h-60 w-60 m-2 p-2 rounded-lg shadow-md flex flex-col items-center">
-                <img
-                  className="h-100 w-100 rounded object-cover mb-2"
-                  src={product.image}
-                  alt={product.productName}
-                  style={{ width: 100, height: 100 }}
-                />
-                <div>{product.productName}</div>
-                <div>₹{product.price}</div>
+              <div className="hide-scrollbar flex flex-row w-full">
+                {items.map((product) => (
+                  <div
+                    key={product._id}
+                    className="bg-white h-72 w-60 m-2 p-4 rounded-lg shadow-lg flex flex-col items-center flex-shrink-0 transition-transform hover:scale-105 border border-gray-100"
+                    style={{
+                      scrollSnapAlign: "start",
+                    }}
+                  >
+                    <div className="self-end mb-2 cursor-pointer text-gray-400 hover:text-red-500">
+                      <Heart size={20} />
+                    </div>
+                    <div className="h-36 w-36 flex items-center justify-center mb-3 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+                      <img
+                        className="h-full w-full object-contain transition-transform duration-200 hover:scale-110"
+                        src={product.image}
+                        alt={product.productName}
+                        onClick={() => window.open(product.image, "_blank")}
+                      />
+                    </div>
+                    <div className="font-semibold text-center text-gray-800 truncate w-full">{product.productName}</div>
+                    <div className="text-green-700 font-bold mt-1 text-lg">₹{product.price}</div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </>
   );
