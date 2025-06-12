@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { useAdminStore } from "../store/useAdminStore";
 import { useAuthStore } from "../store/useAuthStore";
-import { Heart } from "lucide-react";
+import { Heart, Route } from "lucide-react";
+import Product from "./product";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { authUser } = useAuthStore();
@@ -10,7 +12,7 @@ function Home() {
     return <div>Please log in to view products.</div>;
   }
   const { getAllProducts } = useAdminStore();
-
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -30,6 +32,8 @@ function Home() {
     acc[key].push(product);
     return acc;
   }, {});
+
+  <Route path="/product/:id" element={<Product />} />;
 
   return (
     <>
@@ -65,7 +69,8 @@ function Home() {
                         className="h-full w-full object-contain transition-transform duration-200 hover:scale-110"
                         src={product.image}
                         alt={product.productName}
-                        onClick={() => window.open(product.image, "_blank")}
+                        onClick={() => navigate(`/product/${product._id}`)}
+                        style={{ cursor: "pointer" }}
                       />
                     </div>
                     <div className="font-semibold text-center text-gray-800 truncate w-full">{product.productName}</div>
