@@ -2,9 +2,11 @@ import { useState } from "react";
 import pandaImg from "../media/panda.png";
 import { CircleUser } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { authUser } = useAuthStore();
 
   const handleOpenNav = () => setMenuOpen(true);
   const handleCloseNav = () => setMenuOpen(false);
@@ -69,10 +71,17 @@ function NavBar() {
                     />
                   </svg>
                 </button>
-                <CircleUser className="h-10 w-10" />
+                 {/* Avatar logic */}
+                 {authUser && authUser.firstName ? (
+                  <div className="h-10 w-10 flex items-center justify-center rounded-full bg-blue-500 text-white font-bold text-lg uppercase">
+                    {authUser.firstName[0]}
+                  </div>
+                ) : (
+                  <CircleUser className="h-10 w-10" />
+                )}
               </div>
             </div>
-
+            
             {/* Search bar centered under the menu */}
             <div className="flex justify-center mt-4 pb-3">
               <form className="flex items-center space-x-2">
