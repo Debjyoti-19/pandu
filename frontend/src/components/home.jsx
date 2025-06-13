@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { useAdminStore } from "../store/useAdminStore";
 import { useAuthStore } from "../store/useAuthStore";
-import { Heart, Route } from "lucide-react";
-import Product from "./product";
-import { useNavigate } from "react-router-dom";
+import { Heart, ShoppingCart, ShoppingBag, X } from "lucide-react";
 
 function Home() {
   const { authUser } = useAuthStore();
@@ -12,8 +10,10 @@ function Home() {
     return <div>Please log in to view products.</div>;
   }
   const { getAllProducts } = useAdminStore();
-  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,11 +33,48 @@ function Home() {
     return acc;
   }, {});
 
-  <Route path="/product/:id" element={<Product />} />;
-
   return (
     <>
       <NavBar />
+      {/* Modal for product details */}
+      {modalOpen && selectedProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-md relative">
+            <button
+              className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+              onClick={() => setModalOpen(false)}
+            >
+              <X size={28} />
+            </button>
+            <div className="flex flex-col items-center">
+              <div className="h-56 w-56 flex items-center justify-center mb-4 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+                <img
+                  className="h-full w-full object-contain"
+                  src={selectedProduct.image}
+                  alt={selectedProduct.productName}
+                />
+              </div>
+              <div className="font-bold text-xl text-gray-800 mb-2 text-center">
+                {selectedProduct.productName}
+              </div>
+              <div className="text-green-700 font-bold text-lg mb-2">
+                ₹{selectedProduct.price}
+              </div>
+              <div className="text-gray-600 mb-4 text-center">
+                {selectedProduct.description}
+              </div>
+              <div className="flex gap-4 w-full justify-center">
+                <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                  <ShoppingCart size={18} /> Add to Cart
+                </button>
+                <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                  <ShoppingBag size={18} /> Buy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mx-10 mt-5 h-[calc(100vh-80px)] overflow-y-auto">
         {Object.entries(grouped).map(([subcategory, items]) => (
           <div key={subcategory} className="mb-10">
@@ -66,15 +103,21 @@ function Home() {
                     </div>
                     <div className="h-36 w-36 flex items-center justify-center mb-3 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
                       <img
-                        className="h-full w-full object-contain transition-transform duration-200 hover:scale-110"
+                        className="h-full w-full object-contain transition-transform duration-200 hover:scale-110 cursor-pointer"
                         src={product.image}
                         alt={product.productName}
-                        onClick={() => navigate(`/product/${product._id}`)}
-                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setModalOpen(true);
+                        }}
                       />
                     </div>
-                    <div className="font-semibold text-center text-gray-800 truncate w-full">{product.productName}</div>
-                    <div className="text-green-700 font-bold mt-1 text-lg">₹{product.price}</div>
+                    <div className="font-semibold text-center text-gray-800 truncate w-full">
+                      {product.productName}
+                    </div>
+                    <div className="text-green-700 font-bold mt-1 text-lg">
+                      ₹{product.price}
+                    </div>
                   </div>
                 ))}
               </div>

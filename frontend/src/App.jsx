@@ -19,7 +19,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/store" element={<Store />} />
-        <Route path="/product/:productId" element={<Product />} />
       </Routes>
     </>
   );
