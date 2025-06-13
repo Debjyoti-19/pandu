@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { useAuthStore } from "./store/useAuthStore";
 import Page1 from "./components/page1";
 import Signup from "./components/signup";
 import Login from "./components/login";
-import "./App.css";
 import Home from "./components/home";
 import Store from "./components/store";
-import { useAuthStore } from "./store/useAuthStore";
+import Product from "./components/product";
 
 function App() {
   const { authUser } = useAuthStore()
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/product/:productId" element={<Product />} />
       </Routes>
     </>
   );
